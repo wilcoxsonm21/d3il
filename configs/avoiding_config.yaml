@@ -1,5 +1,5 @@
 defaults:
-  - agents: act_agent
+  - agents: bc_agent
 #  - override hydra/launcher: submitit_slurm
 
 agent_name: act

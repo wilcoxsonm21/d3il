@@ -42,6 +42,7 @@ class BaseAgent(abc.ABC):
         self.max_train_steps = int(max_train_steps)
         self.eval_every_n_steps = eval_every_n_steps
         self.working_dir = os.getcwd()
+        print("Working directory: ", self.working_dir)
         total_params = sum(p.numel() for p in self.model.get_params())
         log.info("The model has a total amount of {} parameters".format(total_params))
 

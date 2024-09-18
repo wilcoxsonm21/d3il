@@ -264,11 +264,16 @@ class BC_Agent(BaseAgent):
             out = self.model(torch.cat([state, goal], dim=-1))
         else:
             out = self.model(state)
-
         out = out.clamp_(self.min_action, self.max_action)
 
         model_pred = self.scaler.inverse_scale_output(out)
         return model_pred.detach().cpu().numpy()[0]
+    
+    @torch.no_grad()
+    def sample_actions(self, rng, observations) -> torch.Tensor:
+        action = self.predict(state=observations)[0]
+        return action
+
 
     def load_pretrained_model(self, weights_path: str, sv_name=None) -> None:
         """

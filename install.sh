@@ -5,14 +5,14 @@ echo New Environment Name:
 read envname
 
 echo Creating new conda environment $envname
-conda create -n $envname python=3.10.8 -y -q
+#conda create -n $envname python=3.10.8 -y -q
 
 eval "$(conda shell.bash hook)"
 conda activate $envname
 
 echo
 echo Activating $envname
-if [[ "$CONDA_DEFAULT_ENV" != "$envname" ]]
+if [[ "$conda_DEFAULT_ENV" != "$envname" ]]
 then
     echo Failed to activate conda environment.
     exit 1

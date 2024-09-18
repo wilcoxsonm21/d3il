@@ -50,7 +50,6 @@ class Pushing_Dataset(TrajectoryDataset):
         bp_data_dir = sim_framework_path("environments/dataset/data/pushing/all_data")
 
         state_files = np.load(sim_framework_path(data_directory), allow_pickle=True)
-
         for file in state_files:
             with open(os.path.join(bp_data_dir, file), 'rb') as f:
                 env_state = pickle.load(f)
@@ -134,6 +133,25 @@ class Pushing_Dataset(TrajectoryDataset):
             T = int(self.masks[i].sum().item())
             result.append(self.observations[i, :T, :])
         return torch.cat(result, dim=0)
+    
+    def get_all_next_observations(self):
+        result = []
+        # mask out invalid observations and shift by one
+        for i in range(len(self.masks)):
+            T = int(self.masks[i].sum().item())
+            result.append(self.observations[i, 1:T+1, :]) # shift by 1
+        return torch.cat(result, dim=0)
+
+    def get_all_masks(self):
+        result = []
+        # we want to have masks that line up with the valid actions/observations
+        for i in range(len(self.masks)):
+            T = int(self.masks[i].sum().item())
+            masks = 1 + torch.diff(self.masks[i])[:T] # negative diff should only be 1 at index where episode ends, want to subtract from 1 cause mask should be 1 everywhere except end of trajectory
+            result.append(masks) 
+            assert masks.sum().item() == T - 1 and masks[-1] == 0 # verifying above statement
+        return torch.cat(result, dim=0)
+
 
     def __len__(self):
         return len(self.slices)

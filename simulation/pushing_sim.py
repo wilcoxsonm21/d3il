@@ -21,8 +21,8 @@ test_contexts = np.load(sim_framework_path("environments/dataset/data/pushing/te
                         allow_pickle=True)
 
 
-def assign_process_to_cpu(pid, cpus):
-    os.sched_setaffinity(pid, cpus)
+#def assign_process_to_cpu(pid, cpus):
+#    os.sched_setaffinity(pid, cpus)
 
 
 class Pushing_Sim(BaseSim):
@@ -41,9 +41,8 @@ class Pushing_Sim(BaseSim):
         self.n_trajectories_per_context = n_trajectories_per_context
 
     def eval_agent(self, agent, contexts, n_trajectories, mode_encoding, successes, mean_distance, pid, cpu_set):
-
         print(os.getpid(), cpu_set)
-        assign_process_to_cpu(os.getpid(), cpu_set)
+       #assign_process_to_cpu(os.getpid(), cpu_set)
 
         env = Block_Push_Env(render=self.render)
         env.start()
@@ -70,7 +69,6 @@ class Pushing_Sim(BaseSim):
                 done = False
 
                 while not done:
-
                     obs = np.concatenate((pred_action[:2], obs))
 
                     pred_action = agent.predict(obs)

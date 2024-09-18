@@ -376,7 +376,7 @@ class Block_Push_Env(GymEnvWrapper):
 
         return mode, mean_distance
 
-    def get_reward(self, if_sparse=False):
+    def get_reward(self, if_sparse=True): # FORCING TO USE SPARSE REWARD
         # return 0
         if if_sparse:
             return 0
@@ -470,7 +470,6 @@ class Block_Push_Env(GymEnvWrapper):
         return obs
 
     def _reset_env(self, random=True, context=None):
-
         if self.interactive:
             for log_name, s in self.cam_dict.items():
                 s.reset()

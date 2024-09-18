@@ -231,15 +231,16 @@ class ObstacleAvoidanceEnv(GymEnvWrapper):
         self.mode_encoding = np.zeros(2 + 3 + 4)
 
     def get_reward(self):
-        ...
+        return 1 # not implemented orgingally but should be ok 
 
     def _check_early_termination(self) -> bool:
-
         # print(self.check_failure())
 
         if self.check_success() or self.check_failure():
             if self.check_success():
+                print("Sucess")
                 self.success = True
+            print("Failure")
             self.terminated = True
             return True
 

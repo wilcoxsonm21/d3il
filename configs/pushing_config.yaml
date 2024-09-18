@@ -10,7 +10,7 @@ eval_data_path: environments/dataset/data/pushing/eval_files.pkl
 
 # insert wandb here
 wandb:
-  entity: atalaydonat
+  entity: explore-augmented
   project: d3il-test
 
 group: pushing_${agent_name}_test
@@ -45,16 +45,16 @@ n_embd: 72
 train_batch_size: 1024
 val_batch_size: 1024
 num_workers: 4
-device: 'cpu'
-epoch: 4
-eval_every_n_epochs: 2
+device: 'cuda'
+epoch: 500
+eval_every_n_epochs: 50
 scale_data: True
 
 # Environment
 obs_dim: 10
 action_dim: 2
 max_len_data: 512
-window_size: 5
+window_size: 1 # CHANGED TO MATCH BC AGENT
 
 # Dataset
 trainset:

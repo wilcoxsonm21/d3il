@@ -237,6 +237,12 @@ class ActAgent(BaseAgent):
         next_action = self.curr_action_seq[:, self.action_counter, :]
         self.action_counter += 1
         return next_action.detach().cpu().numpy()
+    
+    @torch.no_grad()
+    def sample_actions(self, rng, observations) -> torch.Tensor:
+        action = self.predict(state=observations)[0]
+        return action
+
 
     def kl_divergence(self, mu, logvar):
         batch_size = mu.size(0)

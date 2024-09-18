@@ -34,7 +34,6 @@ def main(cfg: DictConfig) -> None:
         mode="disabled",
         config=wandb.config
     )
-
     agent = hydra.utils.instantiate(cfg.agents)
     
     # TODO: insert agent.load_pretrained_model() here with relative path
